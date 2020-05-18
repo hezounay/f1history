@@ -11,57 +11,30 @@ use App\Entity\Pilote;
 use App\Entity\Stats;
 use App\Entity\Team;
 use App\Entity\User;
-use App\Entity\Role;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
 
     private $encoder;
+    private $gp;
 
     public function __construct(UserPasswordEncoderInterface $encoder){
         $this->encoder = $encoder;
+    
     }
 
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create('FR-fr');
 
-/* création d'un role admin + administrateur */
-        $adminRole = new Role();
-        $adminRole->setTitle('ROLE_ADMIN');
-        $manager->persist($adminRole);
-/* création d'un role user */
-$userRole = new Role();
-$userRole->setTitle('ROLE_USER');
-$manager->persist($userRole);
-
-
         $adminUser = new User();
-        $adminUser->setUsername('hezounay')
-                  ->setEmail('admin@f1.be')
-                  ->setHash($this->encoder->encodePassword($adminUser,'password'))
-                  ->addUserRole($adminRole);
-
-        $manager->persist($adminUser);        
-        
-         // gestion des utilisateurs 
-
- 
-         for($i=1; $i<=10; $i++){
-             $user = new User();
- 
-             $hash = $this->encoder->encodePassword($user, 'password');
- 
-             $user->setUsername($faker->userName())
-                  ->setEmail($faker->email())
-                  ->setHash($hash)
-                  ->addUserRole($userRole);
-                
-             $manager->persist($user);    
-       
-         }
-        
+        $adminUser->setFirstName('Maxime')
+                ->setLastName('Dumoulin')
+                ->setEmail('admin@f1.be')
+                ->setPassword($this->encoder->encodePassword($adminUser,'password'))
+                ->setRoles(['ROLE_ADMIN']);
+        $manager->persist($adminUser);
 
 
         // gestion des Grands-Prix
@@ -80,7 +53,7 @@ $manager->persist($userRole);
                ->setDescription($description);
 
                
-                  //gestion des images des Grands-Prix
+        //gestion des images des Grands-Prix
 
          for($j=1; $j <= mt_rand(2,5) ; $j++){
 
@@ -92,13 +65,36 @@ $manager->persist($userRole);
 
             $manager->persist($cover);
         } 
+
+
+
+            $this->gp=$gp;
                 $manager->persist($gp); 
+
         }   
       
+        // gestion des teams
 
-         // gestion des Pilotes
+        for($i=1 ; $i <= 10; $i++){
+            $team = new Team();
 
-         for($i=1 ; $i <= 20; $i++){
+
+            $nom = $faker->lastName();
+            $moteur = 'ferrari';
+            $pays = $faker->country();
+
+
+            
+
+            $team->setNom($nom)
+                 ->setMoteur($moteur)
+                 ->setPays($pays);
+
+                 $manager->persist($team); 
+               
+                 // gestion des Pilotes
+
+         for($p=1 ; $p <=2; $p++){
             $pilote = new Pilote();
 
             $prenom = $faker->firstName();
@@ -112,34 +108,49 @@ $manager->persist($userRole);
                ->setNom($nom)
                ->setDatenaissance($datenaissance)
                ->setNationalite($nationalite)
-               ->setActif($actif);
+               ->setActif($actif)
+               ->setTeam($team);
                
-               
-               $manager->persist($pilote); 
 
-        } 
+                // gestion des Stats
 
-        // gestion des Stats
-
-        for($i=1 ; $i <= 50; $i++){ 
+        for($m=1 ; $m <= 1; $m++){ 
 
             $stats = new Stats();
 
-            $team = $faker->company();
-            
+            $myteam = $faker->company();
+            $chrono='1:25:365';
             $annee = $faker->numberBetween(2014,2019);
+            
            
             
 
-            $stats->setTeam($team)
-                
-               ->SetAnnee($annee);
-               
+            $stats->setTeam($myteam)
+                ->setChrono($chrono)
+               ->SetAnnee($annee)
+               ->setPilote($pilote)
+               ->setGrandPrix($this->gp);
                
                
                $manager->persist($stats); 
 
         }
+
+
+               
+               $manager->persist($pilote); 
+
+        } 
+
+            
+
+               
+
+        } 
+
+
+       
+    
         
         $manager->flush();
     }

@@ -2,23 +2,12 @@
 
 namespace App\Entity;
 
-use App\Entity\Role;
-use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
-use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Cocur\Slugify\Slugify;
-use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- *  @ORM\HasLifecycleCallbacks
- * @UniqueEntity(
- * fields={"email"},
- * message="Un autre utilisateur possède déjà cette adresse email, merci de la modifier"
- * )
  */
 class User implements UserInterface
 {
@@ -31,7 +20,6 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Assert\Email(message="Veuillez renseigner une adresse email valide")
      */
     private $email;
 
@@ -39,11 +27,6 @@ class User implements UserInterface
      * @ORM\Column(type="json")
      */
     private $roles = [];
-    
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Role", mappedBy="users")
-     */
-    private $userRoles;
 
     /**
      * @var string The hashed password
@@ -53,29 +36,13 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="Vous devez renseigner votre pseudo !")
      */
-    private $username;
+    private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $slug;
-
-    /**
-     * Permet d'intialiser le slug
-     * 
-     * @ORM\PrePersist
-     * @ORM\PreUpdate
-     *
-     * @return void
-     */
-    public function initializeSlug(){
-        if(empty($this->slug)){
-            $slugify = new Slugify();
-            $this->slug = $slugify->slugify($this->id.' '.$this->username);
-        }
-    }
+    private $lastName;
 
     public function getId(): ?int
     {
@@ -90,18 +57,6 @@ class User implements UserInterface
     public function setEmail(string $email): self
     {
         $this->email = $email;
-
-        return $this;
-    }
-
-    public function getHash(): ?string
-    {
-        return $this->hash;
-    }
-
-    public function setHash(string $hash): self
-    {
-        $this->hash = $hash;
 
         return $this;
     }
@@ -167,51 +122,27 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
-    public function setUsername(string $username): self
+    public function getFirstName(): ?string
     {
-        $this->username = $username;
+        return $this->firstName;
+    }
+
+    public function setFirstName(string $firstName): self
+    {
+        $this->firstName = $firstName;
 
         return $this;
     }
 
- /**
-     * @return Collection|Role[]
-     */
-    public function getUserRoles(): Collection
+    public function getLastName(): ?string
     {
-        return $this->userRoles;
+        return $this->lastName;
     }
 
-    public function addUserRole(Role $userRole): self
+    public function setLastName(string $lastName): self
     {
-     //   if (!$this->userRoles->contains($userRole)) {
-       //     $this->userRoles[] = $userRole;
-        //    $userRole->addUser($this);
-        
+        $this->lastName = $lastName;
 
         return $this;
     }
-
-    public function removeUserRole(Role $userRole): self
-    {
-        if ($this->userRoles->contains($userRole)) {
-            $this->userRoles->removeElement($userRole);
-            $userRole->removeUser($this);
-        }
-
-        return $this;
-    }
-
-    public function getSlug(): ?string
-    {
-        return $this->slug;
-    }
-
-    public function setSlug(string $slug): self
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
-
 }

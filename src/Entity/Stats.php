@@ -42,7 +42,7 @@ class Stats
     private $grandPrix;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=255)
      */
     private $chrono;
 
@@ -65,12 +65,12 @@ class Stats
         return $this;
     }
 
-    public function getChrono(): ?\DateTimeInterface
+    public function getChrono()
     {
         return $this->chrono;
     }
 
-    public function setChrono(\DateTimeInterface $chrono): self
+    public function setChrono($chrono)
     {
         $this->chrono = $chrono;
 
