@@ -22,10 +22,7 @@ class Stats
      */
     private $team;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $chrono;
+ 
 
     /**
      * @ORM\Column(type="integer")
@@ -43,6 +40,11 @@ class Stats
      * @ORM\JoinColumn(nullable=false)
      */
     private $grandPrix;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $chrono;
 
   
 

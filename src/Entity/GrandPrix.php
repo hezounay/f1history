@@ -2,13 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\GrandPrixRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\GrandPrixRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass=GrandPrixRepository::class)
+ * @ORM\HasLifecycleCallbacks
  */
 class GrandPrix
 {
@@ -35,11 +37,6 @@ class GrandPrix
     private $map;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $cover;
-
-    /**
      * @ORM\Column(type="text")
      */
     private $description;
@@ -49,9 +46,36 @@ class GrandPrix
      */
     private $stats;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="grandprix", orphanRemoval=true)
+     */
+    private $images;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
+
     public function __construct()
     {
         $this->stats = new ArrayCollection();
+        $this->images = new ArrayCollection();
+    }
+    
+    /**
+     * Permet d'intialiser le slug
+     *
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     * 
+     * @return void
+     */
+    public function initializeSlug(){
+        if(empty($this->slug)){
+            $slugify = new Slugify();
+            $this->slug = $slugify->slugify($this->title);
+        }
+
     }
 
     public function getId(): ?int
@@ -146,6 +170,49 @@ class GrandPrix
                 $stat->setGrandPrix(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Image[]
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Image $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setGrandprix($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Image $image): self
+    {
+        if ($this->images->contains($image)) {
+            $this->images->removeElement($image);
+            // set the owning side to null (unless already changed)
+            if ($image->getGrandprix() === $this) {
+                $image->setGrandprix(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }

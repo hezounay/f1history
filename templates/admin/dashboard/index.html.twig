@@ -1,0 +1,85 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block body %}
+<br>
+<br>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <div class="card bg-primary text-white mb-3 text-center">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4">
+                                <i class="fab fa-whmcs fa-3x"></i>
+                            </div>
+                            <div class="col-8">
+                                <h4 class="card-title">{{stats.stats}} &nbsp Statistiques recensées</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <div class="col">
+                <div class="card bg-dark text-white mb-3 text-center">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4">
+                                <i class="fas fa-flag-checkered fa-3x"></i>
+                            </div>
+                            <div class="col-8">
+                                <h4 class="card-title">{{stats.gp}}&nbsp Grand-Prix recensés</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <div class="col">
+                <div class="card bg-warning text-white mb-3 text-center">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4">
+                                <i class="fas fa-users fa-3x"></i>
+                            </div>
+                            <div class="col-8">
+                                <h4 class="card-title">{{stats.driver}}&nbsp Pilotes recensés</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <div class="col">
+                <div class="card bg-danger text-white mb-3 text-center">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4">
+                                <i class="fas fa-car fa-3x"></i>
+                            </div>
+                            <div class="col-8">
+                                <h4 class="card-title">{{stats.team}}&nbsp Teams recensées</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+<div class="container">
+        <h1 style="@font-face {
+    font-family: "formula";
+    src: url("../assets/fonts/formulabold.otf") format("otf")
+         
+   }">Administration</h1>
+<br>
+        <p>Bienvenue dans l'administration du site F1 History !</p>
+        <p>Si vous êtes là, c'est que vous êtes l'un des contributeurs de ce site et je vous en remercie !</p>
+        <p>Pour qu'il n'y ait pas d'erreurs durant l'encodage des statistiques, des pilotes, des écuries et des grand-prix, veuillez faire une recherche avant d'entrer des données.</p>
+        
+       
+            
+        </div>
+        </div>
+    </div>
+{% endblock %}

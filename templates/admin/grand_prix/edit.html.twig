@@ -1,0 +1,112 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Edition du Grand-Prix {{grandprix.title}}{% endblock %}
+
+{% form_theme myForm _self %}
+
+{% block body %}
+    <div class="container">
+        <h1>Modification du Grand-Prix {{grandprix.title}}</h1>
+        <a href="{{path('admin_grand_prix_index')}}" class="btn btn-secondary my-3">Retour</a>
+        {{form_start(myForm)}}
+        <div class="row">
+            <div class="col">
+                <div class="card bg-light">
+                    <div class="card-header">
+                        <h4 class="card-title">Corriger le Grand-Prix?</h4>
+                    </div>
+                    <div class="card-body">
+                        {{form_widget(myForm)}}
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-check"></i>
+                            Enregistrer les modifications
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card bg-light">
+                    <div class="card-header">
+                        <h4 class="card-title">Les Grand-Prix</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Titre</th>
+                                    <th>Date</th>
+                                    <th>Carte</th>
+                                    <th>Cover</th>
+                                    <th>Description</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                              
+                    <tr>
+                        <td>{{grandprix.id}}</td>
+                        <td>{{grandprix.title}}</td>
+                        <td>{{grandprix.map}}</td>
+                        <td>{{grandprix.cover}}</td>
+                        <td>{{grandprix.description}}</td>
+                        <td class="text-center">
+                           
+                            <a href="{{ path('admin_grandprix_delete', {'id':grandprix.id}) }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                        </td>
+                    </tr>
+     
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        
+        </div>
+
+        {{form_end(myForm)}}
+    </div>
+
+{% endblock %}
+
+{% block _grandprix_images_widget %}
+    {{form_widget(form)}}
+{% endblock %}
+
+{% block _grandprix_images_entry_row %}
+    <div id="block_{{id}}">
+        {{form_widget(form)}}
+    </div>
+{% endblock %}
+
+{% block _grandprix_images_entry_widget %}
+    <div class="row align-items-center">
+        <div class="col-4">
+            {{form_row(form.url)}}
+            {% if value %}
+                <img src="{{value.url}}" class="img-fluid">
+            {% endif %}
+        </div>
+        <div class="col-6">
+            {{form_row(form.caption)}}
+        </div>
+        <div class="col">
+            <button type="button" class="btn btn-danger" data-action="delete" data-target="#block_{{id}}">
+                <i class="fas fa-trash"></i>
+            </button>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function(){
+            $('[data-action="delete"]').on('click',function(){
+                const target = this.dataset.target
+                $(target).remove()
+            })
+        })
+    </script>
+{% endblock %}

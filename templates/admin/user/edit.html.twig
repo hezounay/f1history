@@ -1,0 +1,24 @@
+{% extends 'admin/base.html.twig' %}
+{% block title %}Edition de l'utilisateur {{user.userName}}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="my-5">{{user.userName}}</h1>
+        <a href="{{path('admin_users_index')}}" class="btn btn-secondary">Retour</a>
+        {% if 'ROLE_ADMIN' in user.roles %}
+            <a href="{{path('admin_users_del_admin', {'id': user.id})}}" class="btn btn-danger m-3">Supprimer le rôle admin</a>
+        {% else %}
+            <a href="{{path('admin_users_add_admin', {'id': user.id})}}" class="btn btn-primary m-3">Ajouter le rôle admin</a>
+        {% endif %}
+        <div class="row">
+            <div class="col">
+                {{form_start(myForm)}}
+                {{form_widget(myForm)}}
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-check"></i> Enregistrer les modifications
+                    </button>
+                {{form_end(myForm)}}    
+            </div>
+        </div>
+    </div>
+{% endblock %}

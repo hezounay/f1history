@@ -2,13 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\PiloteRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\PiloteRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass=PiloteRepository::class)
+ * @ORM\HasLifecycleCallbacks
  */
 class Pilote
 {
@@ -54,6 +56,27 @@ class Pilote
      * @ORM\JoinColumn(nullable=false)
      */
     private $team;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
+
+    /**
+     * Permet d'intialiser le slug
+     *
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     * 
+     * @return void
+     */
+    public function initializeSlug(){
+        if(empty($this->slug)){
+            $slugify = new Slugify();
+            $this->slug = $slugify->slugify($this->nom.' '.$this->prenom);
+        }
+
+    }
 
     public function __construct()
     {
@@ -164,6 +187,18 @@ class Pilote
     public function setTeam(?Team $team): self
     {
         $this->team = $team;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }
