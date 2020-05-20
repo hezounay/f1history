@@ -1,0 +1,16 @@
+{% extends 'admin/base.html.twig' %}
+{% block title %}Modification du Pilote &nbsp {{pilote.nom}}{% endblock %}
+
+{% form_theme myForm 'bootstrap_4_layout.html.twig' %}
+{% block body %}
+    <div class="container-fluid">
+        <h1 class="my-5">Modifier le Pilote &nbsp {{pilote.nom}}</h1>
+        {{form_start(myForm)}}
+       
+         
+        {{form_end(myForm)}}
+        <button type="submit" class="btn btn-success">
+                    <i class="fas fa-check"></i> Enregistrer les modifications
+                </button>
+    </div>
+{% endblock %}

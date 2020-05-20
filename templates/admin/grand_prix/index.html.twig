@@ -14,7 +14,6 @@
                     <th>Carte</th>
                 <!--    <th>Chronos</th> !-->
 
-                    <th>Description</th>
                     <th class="text-center">Action</th>
                 </tr>
             </thead>
@@ -25,7 +24,7 @@
                         <td>{{grandprix.title}}</td>
                         <td>{{grandprix.date | date("d/m/Y")}}</td>
                         <td>{{grandprix.map}}</td>       
-                        <td>{{grandprix.description}}</td>
+                
                         <td class="text-center">
                             <a href="{{ path('admin_grandprix_edit', {'id':grandprix.id}) }}" class="btn btn-primary"><i class="fas fa-edit"></i></a>
                             <a href="{{ path('admin_grandprix_delete', {'id':grandprix.id}) }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>

@@ -3,8 +3,9 @@
 
 namespace App\Form;
 
-use App\Entity\Pilote;
+use App\Entity\Team;
 use App\Form\ImageType;
+use App\Form\PiloteType;
 use App\Form\ApplicationType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,7 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 
-class PiloteType extends AbstractType
+class TeamType extends AbstractType
 {
 
 
@@ -30,29 +31,28 @@ class PiloteType extends AbstractType
                     'placeholder'=>"Nom du Pilote"
                 ]
             ])
-            ->add('prenom', TextType::class, [
-                'label' => 'Prénom',
+            ->add('moteur', TextType::class, [
+                'label' => 'Moteur',
                 'attr' => [
-                    'placeholder'=>"Prénom du Pilote"
+                    'placeholder'=>"Moteur utilisé"
                 ]
             ])
-            ->add('nationalite', TextType::class, [
-                'label' => 'Nationalité',
+            ->add('pays', TextType::class, [
+                'label' => 'Localisation',
                 'attr' => [
-                    'placeholder'=>"Nationalité du Pilote"
+                    'placeholder'=>"Localisation de la Team"
                 ]
             ])
-            ->add('datenaissance', DateTimeType::class, [
-                'label' => 'Date de naissance',
-                'attr' => [
-                    'placeholder'=>"Date de naissance du Pilote"
+            ->add(
+                'pilote',
+                CollectionType::class,
+                [
+                    'entry_type' => PiloteType::class,
+                    'allow_add' => true, // permet d'ajouter de nouveaux éléments et ajouter un data_prototype (HTML)
+                    'allow_delete' => true // permet de supprimer des éléments
                 ]
-            ])
-            ->add('actif', CheckboxType::class, [
-                'label' => 'Activité'
-               
-                ]
-            );
+                );
+           
             
             
             
@@ -65,9 +65,7 @@ class PiloteType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Pilote::class
+            'data_class' => Team::class
         ]);
     }
 }
-
-

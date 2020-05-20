@@ -1,0 +1,43 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Les Teams{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <h1 class="my-5">Gestion des Teams</h1>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nom</th>
+                    <th>Moteur</th>
+                    <th>Localisation</th>
+                    <th>Pilote 1</th>
+                    <th>Pilote 2</th>
+
+                    <th class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+ 
+                {% for team in pagination.data %}
+                    <tr>
+                        <td>{{team.id}}</td>
+                        <td>{{team.nom}}</td>
+                        <td>{{team.moteur}}</td>
+                        <td>{{team.pays}}</td>
+                         {% for pilote in team.pilotes %}
+                        <td>{{pilote.nom}}</td>
+                         {% endfor %}
+                        
+                        <td class="text-center">
+                            <a href="{{ path('admin_team_edit', {'id':team.id}) }}" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                            <a href="{{ path('admin_team_delete', {'id':team.id}) }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {{ pagination.display() }}
+    </div>
+{% endblock %}

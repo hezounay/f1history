@@ -1,8 +1,7 @@
 {% extends 'admin/base.html.twig' %}
 
 {% block title %}Edition du Grand-Prix {{grandprix.title}}{% endblock %}
-
-{% form_theme myForm _self %}
+{% form_theme myForm 'bootstrap_4_layout.html.twig' %}
 
 {% block body %}
     <div class="container">

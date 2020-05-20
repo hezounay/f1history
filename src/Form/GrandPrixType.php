@@ -27,11 +27,25 @@ class GrandPrixType extends AbstractType
                     'placeholder'=>"Nom du Grand-Prix"
                 ]
             ])
-            ->add('slug', TextType::class, $this->getConfiguration('slug','Adresse web (automatique)',[
-                'required' => false
-            ]))
-            ->add('date', DateTimeType::class, $this->getConfiguration('Date','Date où le Grand-Prix a eu lieu'))
-            ->add('map', UrlType::class, $this->getConfiguration('Carte du circuit','ajoutez l\'URL de la carte du circuit'))
+            ->add('date', DateTimeType::class, [
+                'label' => 'Date',
+                'attr' => [
+                    'placeholder'=>"Date où le Grand-Prix a eu lieu"
+                ]
+            ])
+            ->add('map', UrlType::class, [
+                'label' => 'Carte du circuit',
+                'attr' => [
+                    'placeholder'=>"ajoutez l\'URL de la carte du circuit"
+                ]
+            ])
+            ->add('description', TextareaType::class, [
+                'label' => 'Description détaillée',
+                'attr' => [
+                    'placeholder'=>"Donnez une description du circuit"
+                ]
+            ])
+
             ->add(
                 'images',
                 CollectionType::class,
@@ -40,8 +54,8 @@ class GrandPrixType extends AbstractType
                     'allow_add' => true, // permet d'ajouter de nouveaux éléments et ajouter un data_prototype (HTML)
                     'allow_delete' => true // permet de supprimer des éléments
                 ]
-            )
-            ->add('description', TextareaType::class, $this->getConfiguration('Description détaillée','Donnez une description du circuit'));
+                );
+
            
            
     }
