@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Pilote;
+use App\Entity\Team;
 use App\Form\PiloteType;
 use App\Service\PaginationService;
 use App\Repository\PiloteRepository;
@@ -18,19 +19,20 @@ class AdminPiloteController extends AbstractController
      * @Route("/admin/pilote/{page<\d+>?1}", name="admin_pilote_index")
      */
     public function index($page, PaginationService $pagination)
+    
+    
     {
+        
      
         $pagination->setEntityClass(Pilote::class)
         ->setPage($page)
         ->setLimit(10)
         ->setRoute('admin_pilote_index');
 
-        /* return $this->render('admin/pilote/index.html.twig', [
-            'controller_name' => 'AdminGrandPrixController',
-            ]); */  
-
+   
         return $this->render('admin/pilote/index.html.twig',[
-            'pagination' => $pagination
+            'pagination' => $pagination,
+            
         ]);
 
 
@@ -66,8 +68,8 @@ class AdminPiloteController extends AbstractController
             );
         }
 
-        return $this->render('admin/grand_prix/edit.html.twig',[
-            'grandprix' => $pilote,
+        return $this->render('admin/pilote/edit.html.twig',[
+            'pilote' => $pilote,
             'myForm' => $form->createView()
         ]);
 
@@ -76,7 +78,7 @@ class AdminPiloteController extends AbstractController
 
      /**
      * Permet de supprimer une annonce
-     * @Route("/admin/grand_prix/{id}/delete", name="admin_grandprix_delete")
+     * @Route("/admin/pilote/{id}/delete", name="admin_pilote_delete")
      *
      * @param Pilote $pilote
      * @param EntityManagerInterface $manager
@@ -87,7 +89,7 @@ class AdminPiloteController extends AbstractController
         if(count($pilote->getStats()) > 0){
             $this->addFlash(
                 'warning',
-                "Vous ne pouvez pas supprimer le Pilote  <strong>{$pilote->getNom()}</strong> car il possède déjà des statistiques"
+                "Vous ne pouvez pas supprimer le Pilote  <strong>{$pilote->getNom()}</strong> car il possède  des statistiques"
             );
         }else{
             $manager->remove($pilote);
@@ -95,11 +97,11 @@ class AdminPiloteController extends AbstractController
 
             $this->addFlash(
                 'success',
-                "L'annonce <strong>{$pilote->getNom()}</strong> a bien été supprimée"
+                "Le Pilote &nbsp <strong>{$pilote->getNom()}</strong> a bien été supprimé"
             );
         }
 
-        return $this->redirectToRoute('admin_grandprix_index');
+        return $this->redirectToRoute('admin_pilote_index');
 
     }
 

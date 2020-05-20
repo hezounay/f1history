@@ -1,7 +1,43 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/base.html.twig' %}
 
 {% block title %}Les Pilotes{% endblock %}
 
 {% block body %}
+    <div class="container-fluid">
+        <h1 class="my-5">Gestion des Pilotes</h1>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Nationalité</th>
+                    <th>Date de naissance</th>
+                    <th>Actif</th>
+            
 
+                    
+                    <th class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% set team = "" %}
+                {% for pilote in pagination.data %}
+                    <tr>
+                        <td>{{pilote.id}}</td>
+                        <td>{{pilote.nom}}</td>
+                        <td>{{pilote.prenom}}</td>
+                        <td>{{pilote.nationalite}}</td>
+                        <td>{{pilote.datenaissance | date("m/d/Y")}}</td>
+                        <td>{{pilote.actif}}</td>
+                        <td class="text-center">
+                            <a href="{{ path('admin_pilote_edit', {'id':pilote.id}) }}" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                            <a href="{{ path('admin_pilote_delete', {'id':pilote.id}) }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {{ pagination.display() }}
+    </div>
 {% endblock %}
