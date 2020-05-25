@@ -47,13 +47,13 @@ class Pilote
     private $actif;
 
     /**
-     * @ORM\OneToMany(targetEntity=Stats::class, mappedBy="pilote")
+     * @ORM\OneToMany(targetEntity=Stats::class, mappedBy="pilote", orphanRemoval=true)
      */
     private $stats;
 
     /**
      * @ORM\ManyToOne(targetEntity=Team::class, inversedBy="pilotes")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $team;
 
@@ -61,6 +61,11 @@ class Pilote
      * @ORM\Column(type="string", length=255)
      */
     private $slug;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $picture;
 
     /**
      * Permet d'intialiser le slug
@@ -199,6 +204,18 @@ class Pilote
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getPicture(): ?string
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(string $picture): self
+    {
+        $this->picture = $picture;
 
         return $this;
     }

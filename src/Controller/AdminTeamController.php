@@ -67,6 +67,7 @@ class AdminTeamController extends AbstractController
                 'success',
                 "L'annonce <strong>{$team->getNom()}</strong> a bien été modifiée"
             );
+        
         }
 
         return $this->render('admin/team/edit.html.twig',[
@@ -78,7 +79,7 @@ class AdminTeamController extends AbstractController
     }
 
      /**
-     * Permet de supprimer une annonce
+     * Permet de supprimer une Ecurie
      * @Route("/admin/team/{id}/delete", name="admin_team_delete")
      *
      * @param Team $team
@@ -87,12 +88,8 @@ class AdminTeamController extends AbstractController
      */
     public function delete(Team $team, EntityManagerInterface $manager){
         // on ne peut pas supprimer une team qui possède des Pilotes 
-        if(count($team->getPilotes()) > 0){
-            $this->addFlash(
-                'warning',
-                "Vous ne pouvez pas supprimer l'écurie &nbsp  <strong>{$team->getNom()}</strong> car elle possède  des pilotes"
-            );
-        }else{
+       
+        {
             $manager->remove($team);
             $manager->flush();
 
@@ -105,5 +102,42 @@ class AdminTeamController extends AbstractController
         return $this->redirectToRoute('admin_team_index');
 
     }
+      /**
+     * Permet de créer une Ecurie
+     * @Route("/admin/team/new", name="admin_team_create")
+     * 
+     * @return Response
+     */
+    public function create(Request $request, EntityManagerInterface $manager){
+        $team = new Team();
+       
+        $form = $this->createForm(TeamType::class, $team);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+
+
+     
+
+            $manager->persist($team);
+            $manager->flush();
+
+            $this->addFlash(
+                'success',
+                "L'Ecurie &nbsp<strong>{$team->getNom()}</strong> a bien été enregistrée ! "
+            );
+
+            return $this->redirectToRoute('admin_team_index',[
+                'slug' => $team->getSlug()
+            ]);
+        }
+
+        return $this->render('admin/team/new.html.twig', [
+           'myForm' => $form->createView()
+        ]);
+
+    }
     
 }
+

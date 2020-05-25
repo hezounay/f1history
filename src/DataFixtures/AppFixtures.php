@@ -79,7 +79,7 @@ class AppFixtures extends Fixture
             $team = new Team();
 
 
-            $nom = $faker->lastName();
+            $nom = 'ferrari';
             $moteur = 'ferrari';
             $pays = $faker->country();
 
@@ -99,6 +99,7 @@ class AppFixtures extends Fixture
 
             $prenom = $faker->firstName();
             $nom = $faker->lastName();
+            $picture = $faker->imageUrl(150,200);
             $datenaissance = new \DateTime();
             $nationalite = $faker->country();
             $actif = $faker->boolean($chanceOfGettingTrue = 50);   
@@ -109,6 +110,7 @@ class AppFixtures extends Fixture
                ->setDatenaissance($datenaissance)
                ->setNationalite($nationalite)
                ->setActif($actif)
+               ->setPicture($picture)
                ->setTeam($team);
                
 

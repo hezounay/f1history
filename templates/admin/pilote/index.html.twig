@@ -12,6 +12,7 @@
                     <th>Nom</th>
                     <th>Prénom</th>
                     <th>Nationalité</th>
+                    <th>Team</th>
                     <th>Date de naissance</th>
                     <th>Actif</th>
             
@@ -21,13 +22,15 @@
                 </tr>
             </thead>
             <tbody>
-            {% set team = "" %}
+            
                 {% for pilote in pagination.data %}
                     <tr>
                         <td>{{pilote.id}}</td>
-                        <td>{{pilote.nom}}</td>
                         <td>{{pilote.prenom}}</td>
+                        <td>{{pilote.nom}}</td>
                         <td>{{pilote.nationalite}}</td>
+                        <td>{{pilote.team.nom}}</td>
+                        
                         <td>{{pilote.datenaissance | date("m/d/Y")}}</td>
                         <td>{{pilote.actif}}</td>
                         <td class="text-center">

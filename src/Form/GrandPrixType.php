@@ -36,7 +36,7 @@ class GrandPrixType extends AbstractType
             ->add('map', UrlType::class, [
                 'label' => 'Carte du circuit',
                 'attr' => [
-                    'placeholder'=>"ajoutez l\'URL de la carte du circuit"
+                    'placeholder'=>"ajoutez l'URL de la carte du circuit"
                 ]
             ])
             ->add('description', TextareaType::class, [

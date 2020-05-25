@@ -2,13 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\TeamRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\TeamRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass=TeamRepository::class)
+ * @ORM\HasLifecycleCallbacks
  */
 class Team
 {
@@ -38,6 +40,27 @@ class Team
      * @ORM\OneToMany(targetEntity=Pilote::class, mappedBy="team")
      */
     private $pilotes;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
+    
+     /**
+     * Permet d'intialiser le slug
+     *
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     * 
+     * @return void
+     */
+    public function initializeSlug(){
+        if(empty($this->slug)){
+            $slugify = new Slugify();
+            $this->slug = $slugify->slugify($this->nom);
+        }
+
+    }
 
     public function __construct()
     {
@@ -112,6 +135,18 @@ class Team
                 $pilote->setTeam(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }

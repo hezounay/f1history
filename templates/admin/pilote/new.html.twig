@@ -1,0 +1,30 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Création d'un Pilote{% endblock %}
+
+{# {% form_theme myForm _self %} #}
+
+{% form_theme myForm 'bootstrap_4_layout.html.twig' %}
+
+
+{% block body %}
+<br>
+<br>
+
+    <div class="container">
+        <h1>Création d'un nouveau Pilote</h1>
+
+        {{ form_start(myForm) }}
+
+        {{ form_widget(myForm) }}
+            <button type="submit" class="btn btn-primary">Création d'un Pilote</button>
+        {{ form_end(myForm) }}    
+    
+    </div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+    <script src="{{ asset('build/app.js') }}"></script>
+{% endblock %}

@@ -6,14 +6,15 @@
  */
 
 // any CSS you import will output into a single css file (app.css in this case)
-require('../css/app.css');
+require('../css/app.css')
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
-const $ = require('jquery');
+const $ = require('jquery')
 
-global.$ = global.jQuery = $; 
+global.$ = global.jQuery = $
 
-require('popper.js');
-require('./bootstrap.min.js');
+require('popper.js')
+require('./bootstrap.min.js')
+require('./script.js')
 
-console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
+console.log('Hello Webpack Encore! Edit me in assets/js/app.js')

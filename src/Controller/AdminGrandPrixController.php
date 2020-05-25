@@ -11,10 +11,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class AdminGrandPrixController extends AbstractController
 {
     /**
+     * 
      * @Route("/admin/grandprix/{page<\d+>?1}", name="admin_grandprix_index")
      */
     public function index($page, PaginationService $pagination)
@@ -33,6 +36,7 @@ class AdminGrandPrixController extends AbstractController
             'pagination' => $pagination
         ]);
 
+        
 
 
      
@@ -45,7 +49,7 @@ class AdminGrandPrixController extends AbstractController
      /**
      * Permet d'afficher le formulaire d'édition
      * @Route("/admin/grandprix/{id}/edit", name="admin_grandprix_edit")
-     *
+     * 
      * @param GrandPrix $grandprix
      * @param Request $request
      * @param EntityManagerInterface $manager
@@ -100,6 +104,46 @@ class AdminGrandPrixController extends AbstractController
         }
 
         return $this->redirectToRoute('admin_grandprix_index');
+
+    }
+ /**
+     * Permet de créer un Grand-Prix
+     * @Route("/admin/grandprix/new", name="admin_grandprix_create")
+     * 
+     * @return Response
+     */
+    public function create(Request $request, EntityManagerInterface $manager){
+        $grandprix = new GrandPrix();
+       
+        $form = $this->createForm(GrandPrixType::class, $grandprix);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+
+            foreach($grandprix->getImages() as $image){
+                $image->setGrandPrix($grandprix);
+                $manager->persist($image);
+            }
+
+     
+
+            $manager->persist($grandprix);
+            $manager->flush();
+
+            $this->addFlash(
+                'success',
+                "Le Grand-Prix &nbsp<strong>{$grandprix->getTitle()}</strong> a bien été enregistrée ! "
+            );
+
+            return $this->redirectToRoute('admin_grandprix_index',[
+                'slug' => $grandprix->getSlug()
+            ]);
+        }
+
+        return $this->render('admin/grand_prix/new.html.twig', [
+           'myForm' => $form->createView()
+        ]);
 
     }
 

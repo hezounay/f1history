@@ -64,7 +64,7 @@ class AdminPiloteController extends AbstractController
 
             $this->addFlash(
                 'success',
-                "L'annonce <strong>{$pilote->getNom()}</strong> a bien été modifiée"
+                "Le pilote <strong>{$pilote->getPrenom()}&nbsp{$pilote->getNom()}</strong> a bien été modifié"
             );
         }
 
@@ -77,7 +77,7 @@ class AdminPiloteController extends AbstractController
     }
 
      /**
-     * Permet de supprimer une annonce
+     * Permet de supprimer un Pilote
      * @Route("/admin/pilote/{id}/delete", name="admin_pilote_delete")
      *
      * @param Pilote $pilote
@@ -85,13 +85,8 @@ class AdminPiloteController extends AbstractController
      * @return Response
      */
     public function delete(Pilote $pilote, EntityManagerInterface $manager){
-        // on ne peut pas supprimer une annonce qui possède des Statistiques 
-        if(count($pilote->getStats()) > 0){
-            $this->addFlash(
-                'warning',
-                "Vous ne pouvez pas supprimer le Pilote  <strong>{$pilote->getNom()}</strong> car il possède  des statistiques"
-            );
-        }else{
+      
+       {
             $manager->remove($pilote);
             $manager->flush();
 
@@ -104,6 +99,43 @@ class AdminPiloteController extends AbstractController
         return $this->redirectToRoute('admin_pilote_index');
 
     }
+    /**
+     * Permet de créer un Pilote
+     * @Route("/admin/pilote/new", name="admin_pilote_create")
+     * 
+     * @return Response
+     */
+    public function create(Request $request, EntityManagerInterface $manager){
+        $pilote = new Pilote();
+       
+        $form = $this->createForm(PiloteType::class, $pilote);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+
+
+     
+
+            $manager->persist($pilote);
+            $manager->flush();
+
+            $this->addFlash(
+                'success',
+                "Le Pilote &nbsp<strong>{$pilote->getNom()}</strong> a bien été enregistrée ! "
+            );
+
+            return $this->redirectToRoute('admin_pilote_index',[
+                'slug' => $pilote->getSlug()
+            ]);
+        }
+
+        return $this->render('admin/pilote/new.html.twig', [
+           'myForm' => $form->createView()
+        ]);
+
+    }
+
 
 
 

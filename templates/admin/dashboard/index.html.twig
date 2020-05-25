@@ -23,7 +23,7 @@
                 </div>
             </div>
              <div class="col">
-                <div class="card bg-dark text-white mb-3 text-center">
+                <div class="card bg-primary text-white mb-3 text-center">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-4">
@@ -37,7 +37,7 @@
                 </div>
             </div>
              <div class="col">
-                <div class="card bg-warning text-white mb-3 text-center">
+                <div class="card bg-primary text-white mb-3 text-center">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-4">
@@ -51,7 +51,7 @@
                 </div>
             </div>
              <div class="col">
-                <div class="card bg-danger text-white mb-3 text-center">
+                <div class="card bg-primary text-white mb-3 text-center">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-4">
@@ -77,9 +77,79 @@
         <p>Si vous êtes là, c'est que vous êtes l'un des contributeurs de ce site et je vous en remercie !</p>
         <p>Pour qu'il n'y ait pas d'erreurs durant l'encodage des statistiques, des pilotes, des écuries et des grand-prix, veuillez faire une recherche avant d'entrer des données.</p>
         
-       
+       <br>
+       <br>
+       <br>
             
         </div>
         </div>
+         <div class="container-fluid">
+        <div class="row">
+              <div class="col">
+                  <a href="{{ path('admin_grandprix_create') }}" style="text-decoration:none;">   <div class="card bg-primary text-white mb-3 text-center">
+               
+                    <div class="card-body">
+                            <div class="row">
+                                <div class="col-4">
+                                    <i class="fas fa-flag-checkered fa-3x"></i>
+                                </div>
+                                <div class="col-8">
+                                    <h4 class="card-title"> Nouveau Grand-Prix</h4>
+                                </div>
+                            </div>
+                        </div>
+                   
+                </div> </a>
+            </div>
+            <div class="col">
+                  <a href="{{ path('admin_pilote_create') }}" style="text-decoration:none;">   <div class="card bg-primary text-white mb-3 text-center">
+               
+                    <div class="card-body">
+                            <div class="row">
+                                <div class="col-4">
+                                    <i class="fas fa-users fa-3x"></i>
+                                </div>
+                                <div class="col-8">
+                                    <h4 class="card-title"> Nouveau Pilote</h4>
+                                </div>
+                            </div>
+                        </div>
+                   
+                </div> </a>
+            </div>
+             <div class="col">
+                  <a href="{{ path('admin_team_create') }}" style="text-decoration:none;">   <div class="card bg-primary text-white mb-3 text-center">
+               
+                    <div class="card-body">
+                            <div class="row">
+                                <div class="col-4">
+                                    <i class="fas fa-car fa-3x"></i>
+                                </div>
+                                <div class="col-8">
+                                    <h4 class="card-title"> Nouvelle Ecurie</h4>
+                                </div>
+                            </div>
+                        </div>
+                   
+                </div> </a>
+            </div>
+             <div class="col">
+                <div class="card bg-primary text-white mb-3 text-center">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4">
+                                <i class="fas fa-car fa-3x"></i>
+                            </div>
+                            <div class="col-8">
+                                <h4 class="card-title">{{stats.team}}&nbsp Teams recensées</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+             
+      
     </div>
 {% endblock %}
