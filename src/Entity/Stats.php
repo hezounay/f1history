@@ -2,11 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\StatsRepository;
+use Cocur\Slugify\Slugify;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\StatsRepository;
 
 /**
  * @ORM\Entity(repositoryClass=StatsRepository::class)
+ * @ORM\HasLifecycleCallbacks
  */
 class Stats
 {
@@ -46,6 +50,28 @@ class Stats
      */
     private $chrono;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
+
+
+
+    /**
+     * Permet d'intialiser le slug
+     *
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     * 
+     * @return void
+     */
+    public function initializeSlug(){
+        if(empty($this->slug)){
+            $slugify = new Slugify();
+            $this->slug = $slugify->slugify($this->id);
+        }
+
+    }
   
 
     public function getId(): ?int
@@ -112,4 +138,18 @@ class Stats
 
         return $this;
     }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    
 }

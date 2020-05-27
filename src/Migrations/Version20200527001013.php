@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20200525184512 extends AbstractMigration
+final class Version20200527001013 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -23,7 +23,6 @@ final class Version20200525184512 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE pilote CHANGE team_id team_id INT DEFAULT NULL');
-        $this->addSql('ALTER TABLE team ADD slug VARCHAR(255) NOT NULL');
         $this->addSql('ALTER TABLE user CHANGE roles roles JSON NOT NULL');
     }
 
@@ -33,7 +32,6 @@ final class Version20200525184512 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE pilote CHANGE team_id team_id INT DEFAULT NULL');
-        $this->addSql('ALTER TABLE team DROP slug');
         $this->addSql('ALTER TABLE user CHANGE roles roles LONGTEXT CHARACTER SET utf8mb4 NOT NULL COLLATE `utf8mb4_bin`');
     }
 }

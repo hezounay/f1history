@@ -33,6 +33,7 @@ class AppFixtures extends Fixture
                 ->setLastName('Dumoulin')
                 ->setEmail('admin@f1.be')
                 ->setPassword($this->encoder->encodePassword($adminUser,'password'))
+                ->setPasswordConfirm($this->encoder->encodePassword($adminUser,'password'))
                 ->setRoles(['ROLE_ADMIN']);
         $manager->persist($adminUser);
 
@@ -43,11 +44,11 @@ class AppFixtures extends Fixture
             $gp = new GrandPrix();
 
             $title = $faker->country();
-            $date = new \DateTime();
+            $date =$faker->numberBetween(2014,2019);
             $map = $faker->imageUrl(350,350);
             $description ="<p>".join("</p><p>",$faker->paragraphs(3))."</p>";
 
-            $gp->setTitle($title."Grand-Prix")
+            $gp->setTitle($title." Grand-Prix")
                ->setDate($date)
                ->setMap($map)
                ->setDescription($description);
@@ -79,14 +80,14 @@ class AppFixtures extends Fixture
             $team = new Team();
 
 
-            $nom = 'ferrari';
+            $nomteam = 'ferrari';
             $moteur = 'ferrari';
             $pays = $faker->country();
 
 
             
 
-            $team->setNom($nom)
+            $team->setNom($nomteam)
                  ->setMoteur($moteur)
                  ->setPays($pays);
 
@@ -100,7 +101,7 @@ class AppFixtures extends Fixture
             $prenom = $faker->firstName();
             $nom = $faker->lastName();
             $picture = $faker->imageUrl(150,200);
-            $datenaissance = new \DateTime();
+            $datenaissance =$faker->DateTime();
             $nationalite = $faker->country();
             $actif = $faker->boolean($chanceOfGettingTrue = 50);   
             
@@ -120,16 +121,16 @@ class AppFixtures extends Fixture
 
             $stats = new Stats();
 
-            $myteam = $faker->company();
+            
             $chrono='1:25:365';
-            $annee = $faker->numberBetween(2014,2019);
+            
             
            
             
 
-            $stats->setTeam($myteam)
+            $stats->setTeam($nomteam)
                 ->setChrono($chrono)
-               ->SetAnnee($annee)
+               ->SetAnnee($date)
                ->setPilote($pilote)
                ->setGrandPrix($this->gp);
                

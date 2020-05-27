@@ -2,12 +2,21 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
+use Cocur\Slugify\Slugify;
+
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UserRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @ORM\HasLifecycleCallbacks
+ * @UniqueEntity(
+ * fields={"email"},
+ * message="Cet e-mail est déjà utilisée !"
+ * )
  */
 class User implements UserInterface
 {
@@ -20,6 +29,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\Email(message="Veuillez renseigner une adresse email valide")
      */
     private $email;
 
@@ -31,18 +41,30 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\Length(min=8, minMessage="Votre mot de passe doit faire au moins 8 caractères")
      */
     private $password;
 
     /**
+     * @var string The hashed password
      * @ORM\Column(type="string", length=255)
+     * @Assert\EqualTo(propertyPath="password", message="Vous n'avez pas correctement confirmé votre mot de passe")
+     */
+    private $passwordConfirm;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Vous devez renseigner votre prénom")
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Vous devez renseigner votre nom de famille")
      */
     private $lastName;
+
+
 
     public function getId(): ?int
     {
@@ -142,6 +164,18 @@ class User implements UserInterface
     public function setLastName(string $lastName): self
     {
         $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    public function getPasswordConfirm(): ?string
+    {
+        return $this->passwordConfirm;
+    }
+
+    public function setPasswordConfirm(string $passwordConfirm): self
+    {
+        $this->passwordConfirm = $passwordConfirm;
 
         return $this;
     }

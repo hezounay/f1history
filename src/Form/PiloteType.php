@@ -15,8 +15,8 @@ use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
@@ -44,9 +44,11 @@ class PiloteType extends AbstractType
             ->add('nationalite', CountryType::class, [
                 'label' => 'Nationalité',
               ])
-            ->add('datenaissance', DateTimeType::class, [
+            ->add('datenaissance', BirthdayType::class, [
                 'label' => 'Date de naissance',
+                
                 'attr' => [
+                    
                     'placeholder'=>"Date de naissance du Pilote"
                 ]
             ])
@@ -66,8 +68,10 @@ class PiloteType extends AbstractType
                     'placeholder'=>"ajoutez l'URL de la photo du Pilote"
                 ]
             ])
-            ->add('actif', ChoiceType::class, [
-                'label' => 'Activité'
+            ->add('actif', CheckboxType::class, [
+                'label' => 'Activité',
+                'required'=>false
+
                 
                     
                 

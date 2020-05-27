@@ -6,7 +6,6 @@ namespace App\Form;
 use App\Entity\Team;
 use App\Entity\Pilote;
 use App\Form\ImageType;
-use App\Form\PiloteType;
 use App\Form\ApplicationType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -31,15 +30,17 @@ class TeamType extends AbstractType
         ->add('nom', TextType::class, [
             'label' => 'Ecurie',
           ])
-          ->add(
-            'pilotes',
-            CollectionType::class,
-            [
-                'entry_type' => PiloteType::class,
-                'allow_add' => true, // permet d'ajouter de nouveaux éléments et ajouter un data_prototype (HTML)
-                'allow_delete' => true // permet de supprimer des éléments
-            ]
-            )
+      //    ->add('pilotes', EntityType::class, [
+      //      'label' => 'Pilote',
+       //     'attr' => [
+        //        'placeholder'=>"Ecurie du Pilote"
+         //   ],
+          //  'class' => Pilote::class,
+            //'choice_label' => function($pilote){
+              //  return $pilote->getPrenom().' '. $pilote->getNom();
+           // }
+        //])
+        
             ->add('moteur', TextType::class, [
                 'label' => 'Moteur',
                 'attr' => [

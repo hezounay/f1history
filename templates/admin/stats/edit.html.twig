@@ -1,0 +1,20 @@
+{% extends 'admin/base.html.twig' %}
+{% block title %}Modification des Statistiques de &nbsp {{pilote.nom}} au {{grandprix.title}}&nbsp{{stats.annee}}{% endblock %}
+
+{% form_theme myForm 'bootstrap_4_layout.html.twig' %}
+{% block body %}
+<br>
+<br>
+    <div class="container-fluid">
+        <h1 class="my-5">Modification des Statistiques de &nbsp {{pilote.nom}} au {{grandprix.title}}&nbsp{{stats.annee}}</h1>
+        {{form_start(myForm)}}
+        {{form_widget(myForm)}}
+
+       
+              <button type="submit" class="btn btn-success">
+                    <i class="fas fa-check"></i> Enregistrer les modifications
+                </button>
+        {{form_end(myForm)}}
+      
+    </div>
+{% endblock %}

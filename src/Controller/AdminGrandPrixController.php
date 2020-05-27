@@ -35,15 +35,6 @@ class AdminGrandPrixController extends AbstractController
         return $this->render('admin/grand_prix/index.html.twig',[
             'pagination' => $pagination
         ]);
-
-        
-
-
-     
-
-
-
-
     }
 
      /**
@@ -79,7 +70,7 @@ class AdminGrandPrixController extends AbstractController
     }
 
      /**
-     * Permet de supprimer une annonce
+     * Permet de supprimer un Grand-Prix
      * @Route("/admin/grand_prix/{id}/delete", name="admin_grandprix_delete")
      *
      * @param GrandPrix $grandprix
@@ -106,6 +97,7 @@ class AdminGrandPrixController extends AbstractController
         return $this->redirectToRoute('admin_grandprix_index');
 
     }
+    
  /**
      * Permet de créer un Grand-Prix
      * @Route("/admin/grandprix/new", name="admin_grandprix_create")
@@ -147,6 +139,19 @@ class AdminGrandPrixController extends AbstractController
 
     }
 
+   /**
+     * @Route("/admin/grandprix/{slug}", name="admin_grandprix_show")
+     *
+     * @return Response
+     */
+    public function show($slug, GrandPrix $grandprix){
 
+        //$ad = $repo->findOneBySlug($slug);
+
+        return $this->render('admin/grand_prix/show.html.twig',[
+          'grandprix' => $grandprix
+        ]);
+
+    }
 
 }

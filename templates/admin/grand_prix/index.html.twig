@@ -1,10 +1,10 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block title %}Les Grand-Prix{% endblock %}
+{% block title %}Les Grands-Prix{% endblock %}
 
 {% block body %}
     <div class="container-fluid">
-        <h1 class="my-5">Gestion des Grand-Prix</h1>
+        <h1 class="my-5">Gestion des Grands-Prix</h1>
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -21,8 +21,8 @@
                 {% for grandprix in pagination.data %}
                     <tr>
                         <td>{{grandprix.id}}</td>
-                        <td>{{grandprix.title}}</td>
-                        <td>{{grandprix.date | date("d/m/Y")}}</td>
+                        <td><a href="{{ path('admin_grandprix_show', {'slug':grandprix.slug}) }}" style="text-decoration:none;">{{grandprix.title}}</a></td>
+                        <td>{{grandprix.date}}</td>
                         <td>{{grandprix.map}}</td>       
                 
                         <td class="text-center">

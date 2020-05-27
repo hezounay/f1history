@@ -27,10 +27,10 @@ class GrandPrixType extends AbstractType
                     'placeholder'=>"Nom du Grand-Prix"
                 ]
             ])
-            ->add('date', DateTimeType::class, [
+            ->add('date', TextType::class, [
                 'label' => 'Date',
                 'attr' => [
-                    'placeholder'=>"Date où le Grand-Prix a eu lieu"
+                    'placeholder'=>"Année où le Grand-Prix a eu lieu"
                 ]
             ])
             ->add('map', UrlType::class, [

@@ -1,0 +1,47 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Les Statistiques{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <h1 class="my-5">Gestion des Statistiques</h1>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Pilote</th>
+                    <th>Team</th>
+                    <th>Grand-Prix</th>
+                    <th>Année</th>
+                    <th>Chrono</th>
+
+                    <th class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            
+                {% for stats in pagination.data %}
+                    <tr>
+                        <td>{{stats.id}}</td>
+                         
+                        <td>{{stats.pilote.prenom}} {{stats.pilote.nom}}</td>
+                        
+                        <td>{{stats.team}}</td>
+                        
+                        <td>{{stats.grandprix.title}}</td>
+                         
+                        <td>{{stats.annee}}</td>
+                        <td>{{stats.chrono}}</td>
+                        
+                       
+                        <td class="text-center">
+                            <a href="{{ path('admin_stats_edit', {'id':stats.id}) }}" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                            <a href="{{ path('admin_stats_delete', {'id':stats.id}) }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {{ pagination.display() }}
+    </div>
+{% endblock %}
