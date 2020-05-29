@@ -1,5 +1,6 @@
 
 $('#add-image').click(function() {
+    console.log('add-image')
     //compter combien j'ai de form-group pour les indices ex: grand_prix_images_0_url
     const index = +$("#widgets-counter").val(); // le + permet de transformer en nombre pcq val() rend tjrs un type string
 
@@ -11,7 +12,7 @@ $('#add-image').click(function() {
 
     $('#widgets-counter').val(index+1);
 
-    // gére le bouton supprimer 
+    // gère le bouton supprimer 
 
     handleDeleteButtons();
 
@@ -33,4 +34,3 @@ function handleDeleteButtons(){
 
 updateCounter();
 handleDeleteButtons();
-<

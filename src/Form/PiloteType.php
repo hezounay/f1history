@@ -46,7 +46,7 @@ class PiloteType extends AbstractType
               ])
             ->add('datenaissance', BirthdayType::class, [
                 'label' => 'Date de naissance',
-                
+                'widget' => 'single_text',
                 'attr' => [
                     
                     'placeholder'=>"Date de naissance du Pilote"

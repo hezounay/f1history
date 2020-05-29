@@ -1,6 +1,6 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block title %}Edition du Grand-Prix {{grandprix.title}}{% endblock %}
+{% block title %}Edition du Grand Prix {{grandprix.title}}{% endblock %}
 {% form_theme myForm 'bootstrap_4_layout.html.twig' %}
 {% form_theme myForm 'admin/grand_prix/_collection.html.twig' %}
 
@@ -9,14 +9,14 @@
 <br>
 <br>
     <div class="container">
-        <h1>Modification du Grand-Prix {{grandprix.title}}</h1>
+        <h1>Modification du Grand Prix {{grandprix.title}}</h1>
         <a href="{{path('admin_grandprix_index')}}" class="btn btn-secondary my-3">Retour</a>
         {{form_start(myForm)}}
         <div class="row">
             <div class="col">
                 <div class="card bg-light">
                     <div class="card-header">
-                        <h4 class="card-title">Corriger le Grand-Prix?</h4>
+                        <h4 class="card-title">Corriger le Grand Prix?</h4>
                     </div>
                     <div class="card-body">
                         {{form_widget(myForm)}}

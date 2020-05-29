@@ -1,12 +1,25 @@
 {% extends 'base.html.twig' %}
 
+
 {% block title %}Connexion au site{% endblock %}
 
 {% block body %}
+
+<head>
+     <meta charset="UTF-8">
+        <title>F1 History Administration</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" integrity="sha256-46qynGAkLSFpVbEBog43gvNhfrOj+BmwXdxFgVK/Kvc=" crossorigin="anonymous" />
+        <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+        <script src="{{ asset('build/app.js') }}"></script>
+</head>
     <div class="container">
         <div class="row">
             <div class="col-md-6 offset-md-3 bg-light py-3 px-3">
-                <h1>Connexion</h1>
+             <div class="card-header">
+                <h4 class="card-title">
+                    <i class="fas fa-lock"></i>&nbsp Connexion
+                </h4>
+            </div>
                 {% if hasError %}
                     <div class="alert alert-danger">Une erreur est survenue, le nom d'utilisateur ou le mot de passe est invalide</div>
                 {% endif %}
