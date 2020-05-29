@@ -5,6 +5,8 @@
 {% block body %}
     <div class="container-fluid">
         <h1 class="my-5">Gestion des Grands Prix</h1>
+         <input class="form-control" id="myInput" type="text" placeholder="Rechercher..">
+         <br>
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -17,7 +19,7 @@
                     <th class="text-center">Action</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="myTable">
                 {% for grandprix in pagination.data %}
                     <tr>
                         <td>{{grandprix.id}}</td>
@@ -35,4 +37,16 @@
         </table>
         {{ pagination.display() }}
     </div>
+{% endblock %}
+{% block javascripts %}
+<script>
+ $(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+}); 
+</script>
 {% endblock %}

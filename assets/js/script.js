@@ -1,36 +1,36 @@
 
-$('#add-image').click(function() {
-    console.log('add-image')
-    //compter combien j'ai de form-group pour les indices ex: grand_prix_images_0_url
-    const index = +$("#widgets-counter").val(); // le + permet de transformer en nombre pcq val() rend tjrs un type string
+require('./jquery.min.js')
 
-    // récup le prototype des entrées data-prototype
-    const tmpl = $('#grand_prix_images').data('prototype').replace(/__name__/g, index); // drapeau g pour indiquer qu'on va le faire plusieurs fois
+$('#add-image').click(function () {
+  console.log('add-image')
+  // compter combien j'ai de form-group pour les indices ex: grand_prix_images_0_url
+  const index = +$('#widgets-counter').val() // le + permet de transformer en nombre pcq val() rend tjrs un type string
 
-    // injecter le code dans la div
-    $('grand_prix_images').append(tmpl);
+  // récup le prototype des entrées data-prototype
+  const tmpl = $('#grand_prix_images').data('prototype').replace(/__name__/g, index) // drapeau g pour indiquer qu'on va le faire plusieurs fois
 
-    $('#widgets-counter').val(index+1);
+  // injecter le code dans la div
+  $('grand_prix_images').append(tmpl)
 
-    // gère le bouton supprimer 
+  $('#widgets-counter').val(index + 1)
 
-    handleDeleteButtons();
+  // gère le bouton supprimer
 
-});    
+  handleDeleteButtons()
+})    
 
-function updateCounter(){
-    const count = +$('#grand_prix_images div.form-group').length;
+function updateCounter () {
+  const count = +$('#grand_prix_images div.form-group').length
 
-    $('#widgets-counter').val(count);
+  $('#widgets-counter').val(count)
 }
 
-
-function handleDeleteButtons(){
-    $('button[data-action="delete"]').click(function(){
-        const target = this.dataset.target; // dataset (les attributs data et je veux le target)
-        $(target).remove();
-    })
+function handleDeleteButtons () {
+  $('button[data-action="delete"]').click(function () {
+    const target = this.dataset.target // dataset (les attributs data et je veux le target)
+        $(target).remove()
+  })
 }
 
-updateCounter();
-handleDeleteButtons();
+updateCounter()
+handleDeleteButtons()
