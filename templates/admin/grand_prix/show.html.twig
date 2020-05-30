@@ -3,11 +3,47 @@
 {% block title %}{{grandprix.title}}&nbsp{{grandprix.date}}{% endblock %}
 
 {% block body %}
+<br>
+<h1 style="text-align:center;">{{grandprix.title}}</h1>
 
 
 
+<div class="container">
+  <h2>Classement final</h2>
+  <hr>
+  <div class="table-responsive">          
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Position</th>
+        <th>Prénom</th>
+        <th>Nom</th>
+     
+        <th>Nationalité</th>
+        <th>Temps</th>
+      </tr>
+    </thead>
+    <tbody>
+        
+     {% for stats in grandprix.stats|sortbyfield('chrono', 'asc') %}
+      <tr>
+  
+        <td>{{loop.index}}</td>
 
-
+        <td><a href="{{path('admin_pilote_index')}}">{{stats.pilote.prenom}}</a></td>
+        <td>{{stats.pilote.nom}}</td>
+  
+        <td>{{stats.pilote.nationalite}}</td>
+        <td>{{stats.chrono}}</td>
+     
+      
+      </tr>
+   
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</div>
 
 
 

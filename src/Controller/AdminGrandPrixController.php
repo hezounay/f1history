@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Stats;
 use App\Entity\GrandPrix;
 use App\Form\GrandPrixType;
 use App\Service\PaginationService;
@@ -10,9 +11,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminGrandPrixController extends AbstractController
 {
@@ -141,15 +142,18 @@ class AdminGrandPrixController extends AbstractController
 
    /**
      * @Route("/admin/grandprix/{slug}", name="admin_grandprix_show")
-     *
+     * 
+     * @param Stats $stats
      * @return Response
      */
-    public function show($slug, GrandPrix $grandprix){
+    public function show($slug, GrandPrix $grandprix ){
 
         //$ad = $repo->findOneBySlug($slug);
+      
+        
 
         return $this->render('admin/grand_prix/show.html.twig',[
-          'grandprix' => $grandprix
+          'grandprix' => $grandprix,
         ]);
 
     }

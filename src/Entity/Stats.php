@@ -47,6 +47,7 @@ class Stats
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @ORM\OrderBy({"order" = "ASC", "id" = "ASC"})
      */
     private $chrono;
 
